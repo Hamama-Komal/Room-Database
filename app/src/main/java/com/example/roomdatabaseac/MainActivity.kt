@@ -12,6 +12,7 @@ import com.example.roomdatabaseac.databinding.ActivityMainBinding
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,23 +33,14 @@ class MainActivity : AppCompatActivity() {
 
         // Create the Singleton Instance
         database = ContactDB.getDatabase(this)
-       // val database2 = ContactDB.getDatabase(this)   // create same instance as database
+
 
 
         // insert data
         GlobalScope.launch {
-            database.contactsDao().insertContacts(Contacts(0, "Mark","432362563453654"))
+            database.contactsDao().insertContacts(Contacts(0, "Mark","432362563453654", Date()))
         }
 
-        // update data
-        GlobalScope.launch {
-            database.contactsDao().updateContacts(Contacts(1, "Jack","432362563453654"))
-        }
-
-        // delete data
-        GlobalScope.launch {
-            database.contactsDao().deleteContacts(Contacts(1, "Jack","432362563453654"))
-        }
 
         // view data
         binding.text.setOnClickListener{

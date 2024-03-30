@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import androidx.room.Room
 import com.example.roomdatabaseac.databinding.ActivityMainBinding
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var database: ContactDB
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,8 +30,10 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Create the instance of database just for testing
-        database = Room.databaseBuilder(applicationContext, ContactDB::class.java, "ContactsDB").build()
+        // Create the Singleton Instance
+        database = ContactDB.getDatabase(this)
+       // val database2 = ContactDB.getDatabase(this)   // create same instance as database
+
 
         // insert data
         GlobalScope.launch {
@@ -47,9 +51,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         // view data
-        database.contactsDao().getAllContacts().observe(this, Observer {
-            Log.d("ContactsDB", it.toString())
-        })
+        binding.text.setOnClickListener{
+
+            database.contactsDao().getAllContacts().observe(this, Observer {
+                Log.d("ContactsDB", it.toString())
+            })
+
+        }
+
 
 
 

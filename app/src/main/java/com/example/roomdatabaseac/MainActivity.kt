@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
-import androidx.room.Room
 import com.example.roomdatabaseac.databinding.ActivityMainBinding
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         // insert data
         GlobalScope.launch {
-            database.contactsDao().insertContacts(Contacts(0, "Mark","432362563453654", Date()))
+            database.contactsDao().insertContacts(Contacts(0, "Mark","432362563453654", Date(),1))
         }
 
 
